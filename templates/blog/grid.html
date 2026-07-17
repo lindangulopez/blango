@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Bootstrap Grid System Test</h2>
+
+<div class="row mb-3">
+    <div class="col-6 bg-primary text-white p-3">
+        Column 1 (col-6)
+    </div>
+
+    <div class="col bg-danger text-white p-3">
+        Column 2
+    </div>
+
+    <div class="col bg-success text-white p-3">
+        Column 3
+    </div>
+</div>
+
+
+<div class="row mb-3">
+
+    <div class="col-md bg-primary text-white p-3">
+        Column 1 (col-md)
+    </div>
+
+    <div class="col-md bg-danger text-white p-3">
+        Column 2 (col-md)
+    </div>
+
+    <div class="col-md bg-success text-white p-3">
+        Column 3 (col-md)
+    </div>
+
+</div>
+
+
+<div class="row mb-3">
+
+    <div class="col-12 col-sm-10 col-md-6 bg-primary text-white p-3">
+        Column 1
+    </div>
+
+    <div class="col-12 col-sm-2 col-md-2 bg-danger text-white p-3">
+        Column 2
+    </div>
+
+    <div class="col bg-success text-white p-3">
+        Column 3
+    </div>
+
+</div>
+
+{% endblock %}
