@@ -1,0 +1,11 @@
+{% load blog_extras %}
+
+<h1>{{ post.title }}</h1>
+
+<p>
+    {{ post.content|safe }}
+</p>
+
+<hr>
+
+{% include "blog/post-comments.html" %}
