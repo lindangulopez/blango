@@ -45,6 +45,9 @@
 ./db.sqlite3
 ./environ_test.py
 ./generate_tree.sh
+./logging_example
+./logging_example/logging_practice.py
+./logging_practice.py
 ./manage.py
 ./README.md
 ./REPO_TREE.md

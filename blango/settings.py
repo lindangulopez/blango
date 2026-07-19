@@ -111,8 +111,6 @@ class Dev(Configuration):
 
 
     # Database configuration
-    # Reads DATABASE_URL environment variable
-    # Defaults to existing SQLite database
 
     DATABASES = values.DatabaseURLValue(
         f"sqlite:///{BASE_DIR}/db.sqlite3"
@@ -173,10 +171,59 @@ class Dev(Configuration):
     LOGOUT_REDIRECT_URL = "/"
 
 
+    # Logging configuration
+    # Sends logs to STDOUT and emails admins on production errors
+
+    LOGGING = {
+        "version": 1,
+
+        "disable_existing_loggers": False,
+
+        "filters": {
+            "require_debug_false": {
+                "()": "django.utils.log.RequireDebugFalse",
+            },
+        },
+
+        "formatters": {
+            "verbose": {
+                "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+                "style": "{",
+            },
+        },
+
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stdout",
+                "formatter": "verbose",
+            },
+
+            "mail_admins": {
+                "level": "ERROR",
+                "class": "django.utils.log.AdminEmailHandler",
+                "filters": ["require_debug_false"],
+            },
+        },
+
+        "loggers": {
+            "django.request": {
+                "handlers": ["mail_admins"],
+                "level": "ERROR",
+                "propagate": True,
+            },
+        },
+
+        "root": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+    }
+
+
     # Default primary key field type
 
     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 
 class Prod(Dev):
