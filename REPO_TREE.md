@@ -27,7 +27,6 @@
 ./blog/migrations/__pycache__/0002_comment.cpython-36.pyc
 ./blog/migrations/__pycache__/__init__.cpython-36.pyc
 ./blog/models.py
-./blog/post-detail.html
 ./blog/__pycache__
 ./blog/__pycache__/admin.cpython-36.pyc
 ./blog/__pycache__/apps.cpython-36.pyc
@@ -44,6 +43,7 @@
 ./blog/tests.py
 ./blog/views.py
 ./db.sqlite3
+./environ_test.py
 ./generate_tree.sh
 ./manage.py
 ./README.md
