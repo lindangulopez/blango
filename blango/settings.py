@@ -20,24 +20,36 @@ class Dev(Configuration):
     DEBUG = values.BooleanValue(True)
 
     ALLOWED_HOSTS = values.ListValue(
-        ["localhost", "0.0.0.0", ".codio.io"]
+        [
+            "localhost",
+            "0.0.0.0",
+            ".codio.io",
+        ]
     )
 
-    CODIO_HOSTNAME = os.environ.get("CODIO_HOSTNAME", "localhost")
+    CODIO_HOSTNAME = os.environ.get(
+        "CODIO_HOSTNAME",
+        "localhost",
+    )
 
     X_FRAME_OPTIONS = (
-        "ALLOW-FROM " + CODIO_HOSTNAME + "-8000.codio.io"
+        "ALLOW-FROM "
+        + CODIO_HOSTNAME
+        + "-8000.codio.io"
     )
 
     CSRF_COOKIE_SAMESITE = "None"
 
     CSRF_TRUSTED_ORIGINS = [
-        "https://" + CODIO_HOSTNAME + "-8000.codio.io"
+        "https://"
+        + CODIO_HOSTNAME
+        + "-8000.codio.io"
     ]
 
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_SAMESITE = "None"
+
 
     INSTALLED_APPS = [
         "django.contrib.admin",
@@ -47,44 +59,51 @@ class Dev(Configuration):
         "django.contrib.messages",
         "django.contrib.staticfiles",
 
-        # Django Debug Toolbar
         "debug_toolbar",
 
-        # Crispy Forms
         "crispy_forms",
         "crispy_bootstrap5",
+
+        # Django Registration
+        "django_registration",
 
         # Local apps
         "blango_auth",
         "blog",
     ]
 
-    # Use custom User model
+
     AUTH_USER_MODEL = "blango_auth.User"
+
 
     MIDDLEWARE = [
         "debug_toolbar.middleware.DebugToolbarMiddleware",
 
         "django.middleware.security.SecurityMiddleware",
+
         "django.contrib.sessions.middleware.SessionMiddleware",
+
         "django.middleware.common.CommonMiddleware",
 
         "django.middleware.csrf.CsrfViewMiddleware",
 
         "django.contrib.auth.middleware.AuthenticationMiddleware",
+
         "django.contrib.messages.middleware.MessageMiddleware",
 
         "django.middleware.clickjacking.XFrameOptionsMiddleware",
     ]
 
+
     ROOT_URLCONF = "blango.urls"
+
 
     TEMPLATES = [
         {
             "BACKEND": "django.template.backends.django.DjangoTemplates",
 
             "DIRS": [
-                BASE_DIR / "templates"
+                BASE_DIR / "templates",
             ],
 
             "APP_DIRS": True,
@@ -92,6 +111,7 @@ class Dev(Configuration):
             "OPTIONS": {
                 "context_processors": [
                     "django.template.context_processors.debug",
+
                     "django.template.context_processors.request",
 
                     "django.contrib.auth.context_processors.auth",
@@ -102,11 +122,14 @@ class Dev(Configuration):
         },
     ]
 
+
     WSGI_APPLICATION = "blango.wsgi.application"
+
 
     DATABASES = values.DatabaseURLValue(
         f"sqlite:///{BASE_DIR}/db.sqlite3"
     )
+
 
     AUTH_PASSWORD_VALIDATORS = [
         {
@@ -123,6 +146,7 @@ class Dev(Configuration):
         },
     ]
 
+
     LANGUAGE_CODE = "en-us"
 
     TIME_ZONE = values.Value("UTC")
@@ -133,19 +157,33 @@ class Dev(Configuration):
 
     USE_TZ = True
 
+
     STATIC_URL = "/static/"
+
 
     CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
     CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+
     LOGIN_REDIRECT_URL = "/"
 
     LOGOUT_REDIRECT_URL = "/"
 
+
+    # Django Registration two-step activation
+    ACCOUNT_ACTIVATION_DAYS = 7
+
+    # Print activation emails in terminal during development
+    EMAIL_BACKEND = (
+        "django.core.mail.backends.console.EmailBackend"
+    )
+
+
     INTERNAL_IPS = [
         "192.168.10.208",
     ]
+
 
     LOGGING = {
         "version": 1,
@@ -175,25 +213,33 @@ class Dev(Configuration):
             "mail_admins": {
                 "level": "ERROR",
                 "class": "django.utils.log.AdminEmailHandler",
-                "filters": ["require_debug_false"],
+                "filters": [
+                    "require_debug_false",
+                ],
             },
         },
 
         "loggers": {
             "django.request": {
-                "handlers": ["mail_admins"],
+                "handlers": [
+                    "mail_admins",
+                ],
                 "level": "ERROR",
                 "propagate": True,
             },
         },
 
         "root": {
-            "handlers": ["console"],
+            "handlers": [
+                "console",
+            ],
             "level": "DEBUG",
         },
     }
 
+
     DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 
 
 class Prod(Dev):
