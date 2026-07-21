@@ -1,4 +1,4 @@
-{% load blog_extras %}
+{% load blog_extras cache %}
 
 <h1>{{ post.title }}</h1>
 
@@ -9,3 +9,11 @@
 <hr>
 
 {% include "blog/post-comments.html" %}
+
+<hr>
+
+<h3>Recent Posts</h3>
+
+{% cache 3600 recent_posts post %}
+    {% recent_posts post %}
+{% endcache %}
