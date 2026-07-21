@@ -13,10 +13,7 @@ from configurations import Configuration, values
 
 class Dev(Configuration):
 
-    # Build paths inside the project like this: BASE_DIR / "subdir".
     BASE_DIR = Path(__file__).resolve().parent.parent
-
-    # Quick-start development settings
 
     SECRET_KEY = "django-insecure-+sn%dpa!086+g+%44z9*^j^q-u4n!j(#wl)x9a%_1op@zz2+1-"
 
@@ -25,8 +22,6 @@ class Dev(Configuration):
     ALLOWED_HOSTS = values.ListValue(
         ["localhost", "0.0.0.0", ".codio.io"]
     )
-
-    # Codio settings
 
     CODIO_HOSTNAME = os.environ.get("CODIO_HOSTNAME", "localhost")
 
@@ -44,8 +39,6 @@ class Dev(Configuration):
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_SAMESITE = "None"
 
-    # Application definition
-
     INSTALLED_APPS = [
         "django.contrib.admin",
         "django.contrib.auth",
@@ -62,11 +55,14 @@ class Dev(Configuration):
         "crispy_bootstrap5",
 
         # Local apps
+        "blango_auth",
         "blog",
     ]
 
+    # Use custom User model
+    AUTH_USER_MODEL = "blango_auth.User"
+
     MIDDLEWARE = [
-        # Debug Toolbar middleware should be first
         "debug_toolbar.middleware.DebugToolbarMiddleware",
 
         "django.middleware.security.SecurityMiddleware",
@@ -108,13 +104,9 @@ class Dev(Configuration):
 
     WSGI_APPLICATION = "blango.wsgi.application"
 
-    # Database configuration
-
     DATABASES = values.DatabaseURLValue(
         f"sqlite:///{BASE_DIR}/db.sqlite3"
     )
-
-    # Password validation
 
     AUTH_PASSWORD_VALIDATORS = [
         {
@@ -131,8 +123,6 @@ class Dev(Configuration):
         },
     ]
 
-    # Internationalization
-
     LANGUAGE_CODE = "en-us"
 
     TIME_ZONE = values.Value("UTC")
@@ -143,31 +133,19 @@ class Dev(Configuration):
 
     USE_TZ = True
 
-    # Static files
-
     STATIC_URL = "/static/"
-
-    # Crispy Forms configuration
 
     CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
     CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-    # Authentication redirects
-
     LOGIN_REDIRECT_URL = "/"
 
     LOGOUT_REDIRECT_URL = "/"
 
-    # Django Debug Toolbar
-    # Use the IP address returned from the /ip/ view
-
     INTERNAL_IPS = [
         "192.168.10.208",
     ]
-
-    # Logging configuration
-    # Sends logs to STDOUT and emails admins on production errors
 
     LOGGING = {
         "version": 1,
@@ -215,17 +193,11 @@ class Dev(Configuration):
         },
     }
 
-    # Default primary key field type
-
     DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 class Prod(Dev):
 
-    # Production should never run with debugging enabled
-
     DEBUG = False
-
-    # Production secret must come from environment variables
 
     SECRET_KEY = values.SecretValue()
