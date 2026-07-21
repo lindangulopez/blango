@@ -1,0 +1,13 @@
+{% if posts %}
+    <ul class="list-group">
+        {% for post in posts %}
+            <li class="list-group-item">
+                <a href="{% url 'post_detail' slug=post.slug %}">
+                    {{ post.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No recent posts available.</p>
+{% endif %}

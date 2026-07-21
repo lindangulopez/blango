@@ -13,102 +13,100 @@ from configurations import Configuration, values
 
 class Dev(Configuration):
 
-    # Build paths inside the project like this: BASE_DIR / 'subdir'.
+    # Build paths inside the project like this: BASE_DIR / "subdir".
     BASE_DIR = Path(__file__).resolve().parent.parent
-
 
     # Quick-start development settings
 
-    SECRET_KEY = 'django-insecure-+sn%dpa!086+g+%44z9*^j^q-u4n!j(#wl)x9a%_1op@zz2+1-'
+    SECRET_KEY = "django-insecure-+sn%dpa!086+g+%44z9*^j^q-u4n!j(#wl)x9a%_1op@zz2+1-"
 
     DEBUG = values.BooleanValue(True)
 
     ALLOWED_HOSTS = values.ListValue(
-        ['localhost', '0.0.0.0', '.codio.io']
+        ["localhost", "0.0.0.0", ".codio.io"]
     )
-
 
     # Codio settings
 
-    CODIO_HOSTNAME = os.environ.get('CODIO_HOSTNAME', 'localhost')
+    CODIO_HOSTNAME = os.environ.get("CODIO_HOSTNAME", "localhost")
 
     X_FRAME_OPTIONS = (
-        'ALLOW-FROM ' + CODIO_HOSTNAME + '-8000.codio.io'
+        "ALLOW-FROM " + CODIO_HOSTNAME + "-8000.codio.io"
     )
 
-    CSRF_COOKIE_SAMESITE = 'None'
+    CSRF_COOKIE_SAMESITE = "None"
 
     CSRF_TRUSTED_ORIGINS = [
-        'https://' + CODIO_HOSTNAME + '-8000.codio.io'
+        "https://" + CODIO_HOSTNAME + "-8000.codio.io"
     ]
 
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
-    SESSION_COOKIE_SAMESITE = 'None'
-
+    SESSION_COOKIE_SAMESITE = "None"
 
     # Application definition
 
     INSTALLED_APPS = [
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
+        "django.contrib.admin",
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sessions",
+        "django.contrib.messages",
+        "django.contrib.staticfiles",
+
+        # Django Debug Toolbar
+        "debug_toolbar",
 
         # Crispy Forms
-        'crispy_forms',
-        'crispy_bootstrap5',
+        "crispy_forms",
+        "crispy_bootstrap5",
 
         # Local apps
-        'blog',
+        "blog",
     ]
-
 
     MIDDLEWARE = [
-        'django.middleware.security.SecurityMiddleware',
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
+        # Debug Toolbar middleware should be first
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
 
-        'django.middleware.csrf.CsrfViewMiddleware',
+        "django.middleware.security.SecurityMiddleware",
+        "django.contrib.sessions.middleware.SessionMiddleware",
+        "django.middleware.common.CommonMiddleware",
 
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
+        "django.middleware.csrf.CsrfViewMiddleware",
 
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        "django.contrib.auth.middleware.AuthenticationMiddleware",
+        "django.contrib.messages.middleware.MessageMiddleware",
+
+        "django.middleware.clickjacking.XFrameOptionsMiddleware",
     ]
 
-
-    ROOT_URLCONF = 'blango.urls'
-
+    ROOT_URLCONF = "blango.urls"
 
     TEMPLATES = [
         {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            "BACKEND": "django.template.backends.django.DjangoTemplates",
 
-            'DIRS': [
-                BASE_DIR / 'templates'
+            "DIRS": [
+                BASE_DIR / "templates"
             ],
 
-            'APP_DIRS': True,
+            "APP_DIRS": True,
 
-            'OPTIONS': {
-                'context_processors': [
-                    'django.template.context_processors.debug',
-                    'django.template.context_processors.request',
+            "OPTIONS": {
+                "context_processors": [
+                    "django.template.context_processors.debug",
+                    "django.template.context_processors.request",
 
-                    'django.contrib.auth.context_processors.auth',
+                    "django.contrib.auth.context_processors.auth",
 
-                    'django.contrib.messages.context_processors.messages',
+                    "django.contrib.messages.context_processors.messages",
                 ],
             },
         },
     ]
 
-
-    WSGI_APPLICATION = 'blango.wsgi.application'
-
+    WSGI_APPLICATION = "blango.wsgi.application"
 
     # Database configuration
 
@@ -116,32 +114,26 @@ class Dev(Configuration):
         f"sqlite:///{BASE_DIR}/db.sqlite3"
     )
 
-
     # Password validation
 
     AUTH_PASSWORD_VALIDATORS = [
         {
-            'NAME':
-            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+            "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
         },
         {
-            'NAME':
-            'django.contrib.auth.password_validation.MinimumLengthValidator',
+            "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
         },
         {
-            'NAME':
-            'django.contrib.auth.password_validation.CommonPasswordValidator',
+            "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
         },
         {
-            'NAME':
-            'django.contrib.auth.password_validation.NumericPasswordValidator',
+            "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
         },
     ]
 
-
     # Internationalization
 
-    LANGUAGE_CODE = 'en-us'
+    LANGUAGE_CODE = "en-us"
 
     TIME_ZONE = values.Value("UTC")
 
@@ -151,11 +143,9 @@ class Dev(Configuration):
 
     USE_TZ = True
 
-
     # Static files
 
-    STATIC_URL = '/static/'
-
+    STATIC_URL = "/static/"
 
     # Crispy Forms configuration
 
@@ -163,13 +153,18 @@ class Dev(Configuration):
 
     CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-
     # Authentication redirects
 
     LOGIN_REDIRECT_URL = "/"
 
     LOGOUT_REDIRECT_URL = "/"
 
+    # Django Debug Toolbar
+    # Use the IP address returned from the /ip/ view
+
+    INTERNAL_IPS = [
+        "192.168.10.208",
+    ]
 
     # Logging configuration
     # Sends logs to STDOUT and emails admins on production errors
@@ -220,10 +215,9 @@ class Dev(Configuration):
         },
     }
 
-
     # Default primary key field type
 
-    DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+    DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 class Prod(Dev):
@@ -231,7 +225,6 @@ class Prod(Dev):
     # Production should never run with debugging enabled
 
     DEBUG = False
-
 
     # Production secret must come from environment variables
 

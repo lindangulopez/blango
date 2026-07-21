@@ -16,13 +16,23 @@ class Comment(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
+
     content = models.TextField()
+
     content_type = models.ForeignKey(
         ContentType,
         on_delete=models.CASCADE
     )
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
+
+    # Index added to improve filtering by object_id
+    object_id = models.PositiveIntegerField(
+        db_index=True
+    )
+
+    content_object = GenericForeignKey(
+        "content_type",
+        "object_id"
+    )
 
     def __str__(self):
         return self.content[:50]
@@ -33,14 +43,36 @@ class Post(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
-    published_at = models.DateTimeField(blank=True, null=True)
-    title = models.TextField(max_length=100)
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    modified_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    published_at = models.DateTimeField(
+        blank=True,
+        null=True
+    )
+
+    title = models.TextField(
+        max_length=100
+    )
+
     slug = models.SlugField()
-    summary = models.TextField(max_length=500)
+
+    summary = models.TextField(
+        max_length=500
+    )
+
     content = models.TextField()
-    tags = models.ManyToManyField(Tag, related_name="posts")
+
+    tags = models.ManyToManyField(
+        Tag,
+        related_name="posts"
+    )
 
     # Reverse generic relationship to Comment
     comments = GenericRelation(Comment)
