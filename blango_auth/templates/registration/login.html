@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load crispy_forms_tags blog_extras %}
+{% load crispy_forms_tags blog_extras socialaccount %}
 
 {% block title %}Log In to Blango{% endblock %}
 
@@ -44,6 +44,12 @@
         <p>
             <a href="{% url 'password_reset' %}">
                 Lost password?
+            </a>
+        </p>
+
+        <p>
+            <a href="{% provider_login_url 'google' %}">
+                Log in with Google
             </a>
         </p>
 

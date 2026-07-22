@@ -30,6 +30,12 @@ urlpatterns = [
         include("django.contrib.auth.urls"),
     ),
 
+    # Django Allauth authentication URLs
+    path(
+        "accounts/",
+        include("allauth.urls"),
+    ),
+
     # Registration page using custom User model
     path(
         "accounts/register/",

@@ -1,10 +1,35 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags socialaccount %}
+
+{% block title %}Log In to Blango{% endblock %}
+
+{% block content %}
+
 <h2>Login</h2>
 
-<form method="post">
+<form method="post" action="{% url 'login' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    {{ form|crispy }}
 
     <button type="submit" class="btn btn-primary">
         Login
     </button>
+
+    <input type="hidden" name="next" value="{{ next }}">
 </form>
+
+<p>
+    <a href="{% url 'password_reset' %}">
+        Lost password?
+    </a>
+</p>
+
+<p>
+    <a href="{% provider_login_url 'google' %}">
+        Log in with Google
+    </a>
+</p>
+
+{% endblock %}
